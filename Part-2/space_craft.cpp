@@ -1,10 +1,14 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
-main()
-{
-cout << "      /\\      \n";
-cout << "     /~~\\     \n";
-cout << "   / |  | \\   \n";
-cout << "====.    .====\n";
-cout << "    ||||      \n";
+
+int main() {
+
+    cout << "      /\\" << endl;
+    cout << "     /  \\" << endl;
+    cout << "  __/ ~~ \\__" << endl;
+    cout << " /  |    |   \\ " << endl;
+    cout << "====.    .====" << endl;
+    cout << "     ||||" << endl;
+
+    return 0;
 }
