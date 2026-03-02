@@ -1,40 +1,40 @@
-#include <iostream>
-#include <string>
+#include<iostream>
 using namespace std;
 
 int main(){
   
-string filmTitle;
-float adultTicketPrice, childTicketPrice, charityPercent;
-int adultTicketsSold, childTicketsSold;
-float grossAmount, charityAmount, netAmount;
-cout<<"Enter movie title: ";
-cin>>filmTitle;
- 
-cout<<"Adult ticket price: ";
-cin>>adultTicketPrice;
+string movieName;
+float adultPrice, childPrice, donationPercent;
+int adultSold, childSold;
+float totalAmount, donationAmount, remainingAmount;
 
-cout<<"Child ticket price: ";
-cin>>childTicketPrice;
- 
-cout<<"Number of adult tickets sold: ";
-cin>>adultTicketsSold;
- 
-cout<<"Number of child tickets sold: ";
-cin>>childTicketsSold;
- 
-cout<<"Donation percentage: ";
-cin>>charityPercent;
+ cout<<"Enter the movie name: ";
+ getline(cin, movieName);
 
-grossAmount = (adultTicketPrice * adultTicketsSold) + (childTicketPrice * childTicketsSold);
+ cout<<"Enter adult ticket price: ";
+ cin>>adultPrice;
 
-charityAmount = grossAmount * (charityPercent / 100);
- 
-netAmount = grossAmount - charityAmount;
-cout<<"Total collected: "<<grossAmount<<endl;
-cout<<"Donated to charity: "<<charityAmount<<endl;
-cout<<"Remaining amount: "<<netAmount;
- 
-return 0;
+ cout<<"Enter child ticket price: ";
+ cin>>childPrice;
+
+ cout<<"Number of adult tickets sold: ";
+ cin>>adultSold;
+
+ cout<<"Number of child tickets sold: ";
+ cin>>childSold;
+
+ cout<<"Enter donation percentage: ";
+ cin>>donationPercent;
+
+ totalAmount = (adultPrice * adultSold) + (childPrice * childSold);
+ donationAmount = totalAmount * (donationPercent / 100);
+ remainingAmount = totalAmount - donationAmount;
+
+ cout<<"Movie Name: "<<movieName<<endl;
+ cout<<"Total Revenue: "<<totalAmount<<endl;
+ cout<<"Donation Amount: "<<donationAmount<<endl;
+ cout<<"Remaining After Donation: "<<remainingAmount;
+
+ return 0;
  
 };
