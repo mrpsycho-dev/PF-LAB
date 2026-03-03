@@ -17,13 +17,13 @@ main(){
   tax = (cost + fixedCharges)*7/100;
   total = cost + tax + fixedCharges;
   
-  cout<<"Name: "<< name;
-  cout<<"Customer ID: "<< customerID;
-  cout<< "Units consumed: " << unitsConsumed;
-  cout<< "Cost per unit: Rs.35";
-  cout<< "Energy Cost: "<< cost;
-  cout<< "Fixed charges: "<< fixedCharges;
-  cout<< "Tax Amount: "<< tax;
-  cout<< "Total Bill: "<< total;
+  cout<<"Name: "<< name <<endl;
+  cout<<"Customer ID: "<< customerID <<endl;
+  cout<< "Units consumed: " << unitsConsumed <<endl;
+  cout<< "Cost per unit: Rs.35" <<endl;
+  cout<< "Energy Cost: "<< cost <<endl;
+  cout<< "Fixed charges: "<< fixedCharges <<endl;
+  cout<< "Tax Amount: "<< tax <<endl;
+  cout<< "Total Bill: "<< total <<endl;
   
 }
