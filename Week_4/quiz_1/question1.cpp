@@ -2,8 +2,8 @@
 using namespace std;
 
 main(){
-  string name;
-  float customerID, pmr, cmr;
+  string name,customerID;
+  float pmr, cmr;
   float unitsConsumed, tax, cost, fixedCharges, total;
   
   cout<<"Enter name: "; cin>> name;
@@ -14,7 +14,7 @@ main(){
   fixedCharges = 500;
   unitsConsumed = cmr - pmr;
   cost = (unitsConsumed * 35);
-  tax = cost*7/100;
+  tax = (cost + fixedCharges)*7/100;
   total = cost + tax + fixedCharges;
   
   cout<<"Name: "<< name;
@@ -26,5 +26,4 @@ main(){
   cout<< "Tax Amount: "<< tax;
   cout<< "Total Bill: "<< total;
   
-
 }
