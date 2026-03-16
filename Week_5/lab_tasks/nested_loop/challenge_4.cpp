@@ -26,6 +26,8 @@ cout<<"Too many attempts.\n";
 return 0;
 }
  
+while(loggedIn){
+  
     cout<<R"(
     
     ----------ATM MENU-------------
@@ -67,6 +69,6 @@ return 0;
     }
     
   
-  
+}
   
 }
