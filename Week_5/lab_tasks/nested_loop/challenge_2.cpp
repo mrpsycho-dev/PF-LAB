@@ -5,18 +5,18 @@ int main(){
   string user , pass;
   string name="", courseName=""; int age;
   
-  cout <<"UNIVERSITY MANAGEMENT SYSTEM\n";
   for (int i= 0 ; i<3; i++){
-  cout<<"Enter Username: "; cin >> user;
-  cout<<"Enter Password: "; cin >> pass;
-  
+    cout<<"Enter Username: "; cin >> user;
+    cout<<"Enter Password: "; cin >> pass;
+    
     
     if (user == "admin" && pass == "1234"){
       cout<< "Login Successful";
       
-      while(true){
+      for(int i=0; i<5; i++){
         
-      cout<< R"(
+        cout<< R"(
+    ---------------UNIVERSITY MANAGEMENT SYSTEM-------------;
       1. Add Student
       2. View Student
       3. Add Course
