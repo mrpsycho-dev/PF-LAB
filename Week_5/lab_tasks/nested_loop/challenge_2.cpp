@@ -28,15 +28,19 @@ int main(){
         
       }
       if(x==2){
-        cout<< name<< endl<< age;
+        if(name!=""){
+          
+          cout<< name<< endl<< age;
+        }else {cout<< "no data found";}
       }
-      if (x==3){
+     else if (x==3){
         cout<< "Enter course name: "; cin>>courseName;
+        cout<<"course added: "<< courseName;
       }
-      if (x==4){
+     else if (x==4){
         cout<<"Program ends";
         return 0;
-      }
+      } else {cout<<"Invalid choice.";}
       
     }else {
       
