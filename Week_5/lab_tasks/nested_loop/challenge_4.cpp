@@ -6,10 +6,26 @@ int main(){
   int pin;
   float money= 999999, depositAmount, withdrawAmount;
   cout<<"Enter PIN: ";
-  cin>>pin;
   
-  if (pin == 1234){
-    cout<< "Login Successful";
+  bool loggedIn = false;
+  for (int i=1; i<=3; i++){
+    cin>>pin;
+    if (pin == 1234){loggedIn = true;}
+    if(loggedIn){
+      cout<< "Login Successful\n";
+      break;
+      
+    } else {
+      cout<< "Login failed.\n";
+      
+    }
+    
+  }
+  if(!loggedIn){
+cout<<"Too many attempts.\n";
+return 0;
+}
+ 
     cout<<R"(
     
     ----------ATM MENU-------------
@@ -30,17 +46,17 @@ int main(){
       cout<<"Deposit Money: ";
        cin>> depositAmount;
        money = money + depositAmount;
-       return money;
+       
       
     }else if (x==3){
       cout<<"Withdraw Money: ";
        cin>> withdrawAmount;
-       if (money> withdrawAmount){
+       if (money>= withdrawAmount){
         money = money - withdrawAmount;
        }else {
         cout<<"Insufficient Balance. ";
        }
-       return money;
+      
       
     }else if (x==4){
       cout<<"Program Ends.";
@@ -50,7 +66,7 @@ int main(){
       cout<<"Enter a valid choice.";
     }
     
-  }
+  
   
   
 }
