@@ -14,14 +14,15 @@ int main(){
   if (username == "admin"&& pass == 1234){
     success = true;
     cout<< "Login successful.";
+    break;
   } else {cout<<"Incorrect user or pass";}
 }
 
 string studentName_array[3], courseName_array[3];
 int age_array[3];
 
-int count = 0;
-
+int count = 0, courseCount = 0;
+if(!success) {return 0;}
 while(true){
   
   if(success){
@@ -54,21 +55,22 @@ while(true){
         cout << "Array full!\n";
     }
    } else if (option == 2){
-    for (int i=0; i<3; i++){
+    for (int i=0; i<count; i++){
       cout<<studentName_array[i]<<endl;
       cout<<age_array[i]<<endl;
     }
    }
       else if (option == 3){
-        if(count<3){
+        if(courseCount<3){
           
           string courseName;
           cin>> courseName;       
-          courseName_array[count] = courseName;
+          courseName_array[courseCount] = courseName;
+          courseCount++;
       }
     }
       else if (option == 4){
-        for(int i=0; i<3;i++){ 
+        for(int i=0; i<courseCount;i++){ 
           cout<<courseName_array[i];    
         }
       }
