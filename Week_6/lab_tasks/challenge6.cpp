@@ -28,11 +28,11 @@ while(true){
   if(success){
     cout<<R"(
       -------------------------
-      •	1 → Add Student
-      •	2 → View Students
-      •	3 → Add Course
-      •	4 → View Courses
-      •	5 → Exit
+      	1  Add Student
+      	2  View Students
+      	3  Add Course
+      	4  View Courses
+      	5  Exit
       -------------------------
       
       )";
@@ -56,7 +56,10 @@ while(true){
     }
    } else if (option == 2){
     for (int i=0; i<count; i++){
+      
+      cout<<"Student "<<i+1<<": ";
       cout<<studentName_array[i]<<endl;
+      cout<< "Age: ";
       cout<<age_array[i]<<endl;
     }
    }
@@ -67,10 +70,11 @@ while(true){
           cin>> courseName;       
           courseName_array[courseCount] = courseName;
           courseCount++;
-      }
+      } else{cout<<"array full!";}
     }
       else if (option == 4){
         for(int i=0; i<courseCount;i++){ 
+      cout<<"Course "<<i+1<<": "<<endl;
           cout<<courseName_array[i];    
         }
       }
