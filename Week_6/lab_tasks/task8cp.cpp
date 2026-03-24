@@ -16,9 +16,6 @@ int main(){
        // Why can't we use this simple line?
        // finalArray[i+2]={arr1[0],arr2[i] , arr1[1]};
        // finalArray[arr1[0],arr2[i] , arr1[1]];
-      //  finalArray[i][0] = arr1[0];
-      //   finalArray[i][1] = arr2[i];
-      //   finalArray[i][2] = arr1[1];
     
   }
   finalArray[0] = arr1[0];
