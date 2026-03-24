@@ -10,10 +10,16 @@ int main(){
   }
   cout<<"Enter number of elements in 2nd array: "; cin>> n;
   int arr2[n]={};
-  int finalArray[n+2];
+  int finalArray[n+1];
    for (int i=0; i<n;i++){
     cin>>arr2[i];
-    // finalArray[arr1[0],arr2[i] , arr1[1]];
+       // Why can't we use this simple line?
+       // finalArray[i+2]={arr1[0],arr2[i] , arr1[1]};
+       // finalArray[arr1[0],arr2[i] , arr1[1]];
+      //  finalArray[i][0] = arr1[0];
+      //   finalArray[i][1] = arr2[i];
+      //   finalArray[i][2] = arr1[1];
+    
   }
   finalArray[0] = arr1[0];
   for(int i =1; i<=n;i++){
