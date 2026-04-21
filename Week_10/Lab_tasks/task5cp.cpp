@@ -20,7 +20,7 @@ void solveQuadratic(float a, float b, float c)
 {
   float discriminant = (b * b) - (4 * a * c);
 
-  cout << "\nDiscriminant = " << discriminant << endl;
+  cout << "Discriminant = " << discriminant << endl;
 
   if (discriminant > 0)
   {
