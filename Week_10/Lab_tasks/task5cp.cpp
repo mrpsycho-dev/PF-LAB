@@ -41,10 +41,10 @@ void solveQuadratic(float a, float b, float c)
   else
   {
     float realPart = -b / (2 * a);
-    float imagPart = sqrt(-discriminant) / (2 * a);
+    float imaginaryPart = sqrt(-discriminant) / (2 * a);
 
     cout << "Complex roots:\n";
-    cout << "Root 1 = " << realPart << " + " << imagPart << "i\n";
-    cout << "Root 2 = " << realPart << " - " << imagPart << "i\n";
+    cout << "Root 1 = " << realPart << " + " << imaginaryPart << "i\n";
+    cout << "Root 2 = " << realPart << " - " << imaginaryPart << "i\n";
   }
 }

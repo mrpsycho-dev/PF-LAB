@@ -3,7 +3,7 @@ using namespace std;
 
 string numberToText(int num)
 {
-  string ones[] = {"", "One", "Two", "Three", "Four", "Five",
+  string ones[] = {"Zero", "One", "Two", "Three", "Four", "Five",
                    "Six", "Seven", "Eight", "Nine"};
 
   string teens[] = {"Ten", "Eleven", "Twelve", "Thirteen", "Fourteen",
@@ -33,7 +33,7 @@ int main()
 {
   int number;
 
-  cout << "Enter a number (1–99): ";
+  cout << "Enter a number (0-99): ";
   cin >> number;
 
   string result = numberToText(number);
