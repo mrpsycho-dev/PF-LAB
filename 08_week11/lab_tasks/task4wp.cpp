@@ -17,7 +17,7 @@ int main()
       cin >> arrData[i][j];
     }
   }
-  printSum(arrData, rowSize);
+  cout << printSum(arrData, rowSize);
 }
 int printSum(int arrData[][3], int rowSize)
 {
