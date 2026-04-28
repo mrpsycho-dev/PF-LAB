@@ -34,21 +34,19 @@ void largestColumnFirst(int arr[][5], int rowSize)
 {
   int maxSum = 0;
   int maxColIndex = 0;
+
   for (int i = 0; i < rowSize; i++)
   {
     maxSum += arr[i][0];
   }
 
-  // Find column with largest sum
   for (int j = 0; j < 5; j++)
   {
     int sum = 0;
-
     for (int i = 0; i < rowSize; i++)
     {
       sum += arr[i][j];
     }
-
     if (sum > maxSum)
     {
       maxSum = sum;
@@ -56,15 +54,11 @@ void largestColumnFirst(int arr[][5], int rowSize)
     }
   }
 
-  // Swap columns
   for (int i = 0; i < rowSize; i++)
   {
-    int temp = arr[i][0];
-    arr[i][0] = arr[i][maxColIndex];
-    arr[i][maxColIndex] = temp;
+    swap(arr[i][maxColIndex], arr[i][0]);
   }
 }
-
 void printMatrix(int arr[][5], int rowSize)
 {
   for (int i = 0; i < rowSize; i++)
