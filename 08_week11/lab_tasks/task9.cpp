@@ -24,16 +24,16 @@ int main()
 int countIdenticalRows(int arr[][3], int size)
 {
   int count = 0;
-  bool identical = false;
   for (int i = 0; i < size; i++)
   {
-    for (int j = 0; j < 3; j++)
+    for (int j = i + 1; j < size; j++)
     {
+      bool identical = true;
       for (int k = 0; k < 3; k++)
       {
-        if (arr[i][j] == arr[i][k])
+        if (arr[i][k] != arr[j][k])
         {
-          identical = true;
+          identical = false;
           break;
         }
       }
