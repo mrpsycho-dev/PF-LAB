@@ -470,3 +470,83 @@ void viewBorrowRecords()
          << "\n";
   }
 }
+
+void sortEquipment()
+{
+  clearScreen();
+  cout << "\n";
+  cout << "  |=======================================================|\n";
+  cout << "  |                  SORT EQUIPMENT                       |\n";
+  cout << "  |=======================================================|\n";
+  cout << "  |   [1]   Price  - Ascending  (Lowest First)            |\n";
+  cout << "  |   [2]   Price  - Descending (Highest First)           |\n";
+  cout << "  |   [3]   Name   - A to Z                               |\n";
+  cout << "  |   [4]   Name   - Z to A                               |\n";
+  cout << "  |=======================================================|\n";
+  cout << "  Choose option: ";
+
+  int sortChoice;
+  cin >> sortChoice;
+
+  for (int i = 0; i < equipmentCount; i++)
+  {
+    for (int j = i + 1; j < equipmentCount; j++)
+    {
+      bool doSwap = false;
+
+      if (sortChoice == 1 && equipmentPrice[i] > equipmentPrice[j])
+        doSwap = true;
+      if (sortChoice == 2 && equipmentPrice[i] < equipmentPrice[j])
+        doSwap = true;
+      if (sortChoice == 3 && equipmentName[i] > equipmentName[j])
+        doSwap = true;
+      if (sortChoice == 4 && equipmentName[i] < equipmentName[j])
+        doSwap = true;
+
+      if (doSwap)
+      {
+        int tId = equipmentId[i];
+        equipmentId[i] = equipmentId[j];
+        equipmentId[j] = tId;
+        string tName = equipmentName[i];
+        equipmentName[i] = equipmentName[j];
+        equipmentName[j] = tName;
+        string tCat = equipmentCat[i];
+        equipmentCat[i] = equipmentCat[j];
+        equipmentCat[j] = tCat;
+        int tQty = equipmentQty[i];
+        equipmentQty[i] = equipmentQty[j];
+        equipmentQty[j] = tQty;
+        int tAvail = equipmentAvail[i];
+        equipmentAvail[i] = equipmentAvail[j];
+        equipmentAvail[j] = tAvail;
+        string tCond = equipmentCond[i];
+        equipmentCond[i] = equipmentCond[j];
+        equipmentCond[j] = tCond;
+        float tPrice = equipmentPrice[i];
+        equipmentPrice[i] = equipmentPrice[j];
+        equipmentPrice[j] = tPrice;
+      }
+    }
+  }
+
+  cout << "\n  Sorted! Result:\n";
+  cout << "  " << string(55, '-') << "\n";
+  cout << "  "
+       << setw(4) << left << "ID"
+       << setw(16) << left << "Name"
+       << setw(14) << left << "Category"
+       << setw(12) << left << "Price(PKR)"
+       << "\n";
+  cout << "  " << string(55, '-') << "\n";
+
+  for (int i = 0; i < equipmentCount; i++)
+  {
+    cout << "  "
+         << setw(4) << left << equipmentId[i]
+         << setw(16) << left << equipmentName[i]
+         << setw(14) << left << equipmentCat[i]
+         << setw(12) << left << equipmentPrice[i]
+         << "\n";
+  }
+}
