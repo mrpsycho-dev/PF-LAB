@@ -50,3 +50,37 @@ string historyBy[MAX];
 int techCount = 2;
 string techUsername[MAX_TECH] = {"tech1", "tech2"};
 string techName[MAX_TECH] = {"Dr.Sara", "Mr.Hamza"};
+
+////////////////////////////////////////////////////////////////
+// FUNCTION PROTOTYPES
+////////////////////////////////////////////////////////////////
+
+// --- Utility ---
+void addHistory(string action, string item, string by);
+void pause();
+void clearScreen();
+
+int main() {}
+
+////////////////////////////////////////////////////////////////
+// UTILITY FUNCTIONS
+////////////////////////////////////////////////////////////////
+
+void addHistory(string action, string item, string by)
+{
+  historyAction[historyCount] = action;
+  historyItem[historyCount] = item;
+  historyBy[historyCount] = by;
+  historyCount++;
+}
+
+void pause()
+{
+  cout << "\n  Press any key to continue...";
+  getch();
+}
+
+void clearScreen()
+{
+  system("cls");
+}
