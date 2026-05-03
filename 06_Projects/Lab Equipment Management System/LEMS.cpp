@@ -60,6 +60,12 @@ void addHistory(string action, string item, string by);
 void pause();
 void clearScreen();
 
+// --- Menus ---
+void showMainMenu();
+void showAdminMenu();
+void showTechMenu();
+void exitScreen();
+
 int main() {}
 
 ////////////////////////////////////////////////////////////////
@@ -83,4 +89,72 @@ void pause()
 void clearScreen()
 {
   system("cls");
+}
+
+////////////////////////////////////////////////////////////////
+// MENU DISPLAY FUNCTIONS
+////////////////////////////////////////////////////////////////
+
+void showMainMenu()
+{
+  cout << "\n";
+  cout << "  |=======================================================|\n";
+  cout << "  |         LAB EQUIPMENT MANAGEMENT SYSTEM               |\n";
+  cout << "  |                      L E M S                          |\n";
+  cout << "  |=======================================================|\n";
+  cout << "  |   [1]   Admin Login                                   |\n";
+  cout << "  |   [2]   Lab Technician Login                          |\n";
+  cout << "  |   [3]   Exit                                          |\n";
+  cout << "  |=======================================================|\n";
+  cout << "  Choose option: ";
+}
+
+void showAdminMenu()
+{
+  cout << "\n";
+  cout << "  |=======================================================|\n";
+  cout << "  |                  ADMIN DASHBOARD                      |\n";
+  cout << "  |=======================================================|\n";
+  cout << "  |   [1]   Add Equipment                                 |\n";
+  cout << "  |   [2]   View All Equipment                            |\n";
+  cout << "  |   [3]   Search Equipment                              |\n";
+  cout << "  |   [4]   Update Equipment                              |\n";
+  cout << "  |   [5]   Delete Equipment                              |\n";
+  cout << "  |   [6]   View Borrowing Records                        |\n";
+  cout << "  |   [7]   Sort Equipment                                |\n";
+  cout << "  |   [8]   View Equipment by Category                    |\n";
+  cout << "  |   [9]   Manage Technicians                            |\n";
+  cout << "  |  [10]   Activity History                              |\n";
+  cout << "  |  [11]   Logout                                        |\n";
+  cout << "  |=======================================================|\n";
+  cout << "  Choose option: ";
+}
+
+void showTechMenu()
+{
+  cout << "\n";
+  cout << "  |=======================================================|\n";
+  cout << "  |             LAB TECHNICIAN DASHBOARD                  |\n";
+  cout << "  |=======================================================|\n";
+  cout << "  |   [1]   View Available Equipment                      |\n";
+  cout << "  |   [2]   Search Equipment                              |\n";
+  cout << "  |   [3]   Borrow Equipment                              |\n";
+  cout << "  |   [4]   Return Equipment                              |\n";
+  cout << "  |   [5]   My Issued Records                             |\n";
+  cout << "  |   [6]   View Active Borrowings                        |\n";
+  cout << "  |   [7]   Equipment Details                             |\n";
+  cout << "  |   [8]   Borrowing History                             |\n";
+  cout << "  |   [9]   Logout                                        |\n";
+  cout << "  |=======================================================|\n";
+  cout << "  Choose option: ";
+}
+
+void exitScreen()
+{
+  clearScreen();
+  cout << "\n";
+  cout << "  |=======================================================|\n";
+  cout << "  |      Thank you for using LEMS!                        |\n";
+  cout << "  |      Lab Equipment Management System                  |\n";
+  cout << "  |=======================================================|\n";
 }
