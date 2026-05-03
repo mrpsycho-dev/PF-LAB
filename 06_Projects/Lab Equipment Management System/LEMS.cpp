@@ -70,15 +70,15 @@ void exitScreen();
 bool adminLogin();
 bool techLogin(int &loggedIdx);
 
-// --- Shared (used by both Admin and Technician) ---
-void viewEquipment(bool availableOnly);   // Admin: all | Tech: available only
-void searchEquipment();                   // Identical for both
-void viewBorrowTable(string title,        // Replaces: viewBorrowRecords, borrowingHistory,
-                     string filterBy,     //   viewActiveBorrowings, myIssuedRecords
-                     string filterValue); //   filterBy: "all" | "status" | "issuedBy"
-void equipmentDetails();                  // Full detail + ASCII art
+// --- Shared Functions which are used by Admin and Technician both ---
+void viewEquipment(bool availableOnly);
+void searchEquipment();
+void viewBorrowTable(string title,
+                     string filterBy,
+                     string filterValue);
+void equipmentDetails();
 
-// --- Admin Only ---
+// --- Admin Functions ---
 void addEquipment();
 void updateEquipment();
 void deleteEquipment();
@@ -87,7 +87,7 @@ void viewByCategory();
 void manageTechnicians();
 void viewHistory();
 
-// --- Technician Only ---
+// --- Technician Functions ---
 void borrowEquipment(int techIdx);
 void returnEquipment(int techIdx);
 
@@ -379,7 +379,7 @@ bool techLogin(int &loggedIdx)
 ////////////////////////////////////////////////////////////////
 
 // availableOnly = false  ->  Admin  "View All Equipment"       (every item)
-// availableOnly = true   ->  Tech   "View Available Equipment" (avail > 0 only)
+// availableOnly = true   ->  Tech   "View Available Equipment" (Equipment availability > 0 only)
 void viewEquipment(bool availableOnly)
 {
   clearScreen();
@@ -421,7 +421,7 @@ void viewEquipment(bool availableOnly)
     cout << "\n  No equipment to display.\n";
 }
 
-// Identical search — shared between Admin and Technician
+// Search Equipments
 void searchEquipment()
 {
   clearScreen();
@@ -462,13 +462,6 @@ void searchEquipment()
     cout << "\n  No equipment found with that name!\n";
 }
 
-// One function replaces four old borrow-display functions:
-//
-//  Admin  "View Borrowing Records"  -> viewBorrowTable("ALL BORROWING RECORDS", "all",      "")
-//  Tech   "Borrowing History"       -> viewBorrowTable("BORROWING HISTORY",     "all",      "")
-//  Tech   "View Active Borrowings"  -> viewBorrowTable("ACTIVE BORROWINGS",     "status",   "Borrowed")
-//  Tech   "My Issued Records"       -> viewBorrowTable("MY ISSUED RECORDS",     "issuedBy", techName[idx])
-//
 void viewBorrowTable(string title, string filterBy, string filterValue)
 {
   clearScreen();
@@ -514,7 +507,6 @@ void viewBorrowTable(string title, string filterBy, string filterValue)
     cout << "\n  No matching records found.\n";
 }
 
-// Full detail view + ASCII category art — available to both Admin and Technician
 void equipmentDetails()
 {
   clearScreen();
@@ -608,7 +600,7 @@ void equipmentDetails()
 }
 
 ////////////////////////////////////////////////////////////////
-// ADMIN-ONLY FUNCTIONS
+// ADMIN FUNCTIONS
 ////////////////////////////////////////////////////////////////
 
 void addEquipment()
@@ -977,7 +969,7 @@ void viewHistory()
 }
 
 ////////////////////////////////////////////////////////////////
-// TECHNICIAN-ONLY FUNCTIONS
+// TECHNICIAN FUNCTIONS
 ////////////////////////////////////////////////////////////////
 
 void borrowEquipment(int techIdx)
