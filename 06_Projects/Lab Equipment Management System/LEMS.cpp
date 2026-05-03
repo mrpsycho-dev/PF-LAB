@@ -795,3 +795,59 @@ void techSearchEquipment()
   if (!found)
     cout << "\n  No equipment found!\n";
 }
+
+void borrowEquipment(int techIdx)
+{
+  clearScreen();
+  cout << "\n  BORROW EQUIPMENT\n";
+  cout << "  -----------------------------------------\n\n";
+  cout << "  Enter equipment ID: ";
+  int borrowEquipId;
+  cin >> borrowEquipId;
+
+  bool found = false;
+  for (int i = 0; i < equipmentCount; i++)
+  {
+    if (equipmentId[i] == borrowEquipId)
+    {
+      found = true;
+      if (equipmentAvail[i] <= 0)
+      {
+        cout << "\n  Sorry! This equipment is not available.\n";
+      }
+      else
+      {
+        cout << "\n  Equipment    : " << equipmentName[i] << "\n";
+        cout << "  Borrower Name: ";
+        string bName;
+        cin >> bName;
+        cout << "  Roll Number  : ";
+        string bRoll;
+        cin >> bRoll;
+        cout << "  Borrow Date  (DD/MM/YYYY): ";
+        string bDate;
+        cin >> bDate;
+        cout << "  Return Date  (DD/MM/YYYY): ";
+        string rDate;
+        cin >> rDate;
+
+        borrowId[borrowCount] = nextBorrowId++;
+        borrowEquipName[borrowCount] = equipmentName[i];
+        borrowerName[borrowCount] = bName;
+        borrowerRoll[borrowCount] = bRoll;
+        borrowDate[borrowCount] = bDate;
+        returnDate[borrowCount] = rDate;
+        borrowStatus[borrowCount] = "Borrowed";
+        borrowIssuedBy[borrowCount] = techName[techIdx];
+        borrowCount++;
+        equipmentAvail[i]--;
+
+        addHistory("Borrowed", equipmentName[i], techName[techIdx]);
+        cout << "\n  Equipment issued! Borrow ID: " << nextBorrowId - 1 << "\n";
+      }
+      break;
+    }
+  }
+  if (!found)
+    cout << "\n  Equipment ID not found!\n";
+}
