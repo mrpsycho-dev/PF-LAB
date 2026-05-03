@@ -70,32 +70,30 @@ void exitScreen();
 bool adminLogin();
 bool techLogin(int &loggedIdx);
 
-// --- Admin Functions ---
+// --- Shared (used by both Admin and Technician) ---
+void viewEquipment(bool availableOnly);   // Admin: all | Tech: available only
+void searchEquipment();                   // Identical for both
+void viewBorrowTable(string title,        // Replaces: viewBorrowRecords, borrowingHistory,
+                     string filterBy,     //   viewActiveBorrowings, myIssuedRecords
+                     string filterValue); //   filterBy: "all" | "status" | "issuedBy"
+void equipmentDetails();                  // Full detail + ASCII art
+
+// --- Admin Only ---
 void addEquipment();
-void viewAllEquipment();
-void searchEquipment();
 void updateEquipment();
 void deleteEquipment();
-void viewBorrowRecords();
 void sortEquipment();
 void viewByCategory();
 void manageTechnicians();
 void viewHistory();
 
-// --- Technician Functions ---
-void viewAvailableEquipment();
-void techSearchEquipment();
+// --- Technician Only ---
 void borrowEquipment(int techIdx);
 void returnEquipment(int techIdx);
-void myIssuedRecords(int techIdx);
-void viewActiveBorrowings();
-void equipmentDetails();
-void borrowingHistory();
 
 ////////////////////////////////////////////////////////////////
 // MAIN FUNCTION
 ////////////////////////////////////////////////////////////////
-
 int main()
 {
   while (true)
@@ -106,6 +104,9 @@ int main()
     int choice;
     cin >> choice;
 
+    ////////////////////////////////////////////////////////////
+    // ADMIN SECTION
+    ////////////////////////////////////////////////////////////
     if (choice == 1)
     {
       if (adminLogin())
@@ -115,30 +116,32 @@ int main()
           clearScreen();
           showAdminMenu();
 
-          int adminChoice;
-          cin >> adminChoice;
+          int c;
+          cin >> c;
 
-          if (adminChoice == 1)
+          if (c == 1)
             addEquipment();
-          else if (adminChoice == 2)
-            viewAllEquipment();
-          else if (adminChoice == 3)
+          else if (c == 2)
+            viewEquipment(false);
+          else if (c == 3)
             searchEquipment();
-          else if (adminChoice == 4)
+          else if (c == 4)
             updateEquipment();
-          else if (adminChoice == 5)
+          else if (c == 5)
             deleteEquipment();
-          else if (adminChoice == 6)
-            viewBorrowRecords();
-          else if (adminChoice == 7)
+          else if (c == 6)
+            viewBorrowTable("ALL BORROWING RECORDS", "all", "");
+          else if (c == 7)
             sortEquipment();
-          else if (adminChoice == 8)
+          else if (c == 8)
             viewByCategory();
-          else if (adminChoice == 9)
+          else if (c == 9)
             manageTechnicians();
-          else if (adminChoice == 10)
+          else if (c == 10)
+            equipmentDetails();
+          else if (c == 11)
             viewHistory();
-          else if (adminChoice == 11)
+          else if (c == 12)
           {
             cout << "\n  Logging out...\n";
             pause();
@@ -151,6 +154,9 @@ int main()
         }
       }
     }
+    ////////////////////////////////////////////////////////////
+    // TECHNICIAN SECTION
+    ////////////////////////////////////////////////////////////
     else if (choice == 2)
     {
       int loggedIdx = -1;
@@ -162,26 +168,28 @@ int main()
           cout << "\n  Logged in as: " << techName[loggedIdx] << "\n";
           showTechMenu();
 
-          int techOption;
-          cin >> techOption;
+          int c;
+          cin >> c;
 
-          if (techOption == 1)
-            viewAvailableEquipment();
-          else if (techOption == 2)
-            techSearchEquipment();
-          else if (techOption == 3)
+          if (c == 1)
+            viewEquipment(true);
+          else if (c == 2)
+            searchEquipment();
+          else if (c == 3)
             borrowEquipment(loggedIdx);
-          else if (techOption == 4)
+          else if (c == 4)
             returnEquipment(loggedIdx);
-          else if (techOption == 5)
-            myIssuedRecords(loggedIdx);
-          else if (techOption == 6)
-            viewActiveBorrowings();
-          else if (techOption == 7)
+          else if (c == 5)
+            viewBorrowTable("MY ISSUED RECORDS",
+                            "issuedBy",
+                            techName[loggedIdx]);
+          else if (c == 6)
+            viewBorrowTable("ACTIVE BORROWINGS", "status", "Borrowed");
+          else if (c == 7)
             equipmentDetails();
-          else if (techOption == 8)
-            borrowingHistory();
-          else if (techOption == 9)
+          else if (c == 8)
+            viewBorrowTable("BORROWING HISTORY", "all", "");
+          else if (c == 9)
           {
             cout << "\n  Logging out...\n";
             pause();
@@ -194,6 +202,9 @@ int main()
         }
       }
     }
+    ////////////////////////////////////////////////////////////
+    // EXIT
+    ////////////////////////////////////////////////////////////
     else if (choice == 3)
     {
       exitScreen();
@@ -265,8 +276,9 @@ void showAdminMenu()
   cout << "  |   [7]   Sort Equipment                                |\n";
   cout << "  |   [8]   View Equipment by Category                    |\n";
   cout << "  |   [9]   Manage Technicians                            |\n";
-  cout << "  |  [10]   Activity History                              |\n";
-  cout << "  |  [11]   Logout                                        |\n";
+  cout << "  |  [10]   Equipment Details                             |\n";
+  cout << "  |  [11]   Activity History                              |\n";
+  cout << "  |  [12]   Logout                                        |\n";
   cout << "  |=======================================================|\n";
   cout << "  Choose option: ";
 }
@@ -297,7 +309,7 @@ void exitScreen()
   cout << "  |=======================================================|\n";
   cout << "  |      Thank you for using LEMS!                        |\n";
   cout << "  |      Lab Equipment Management System                  |\n";
-  cout << "  |=======================================================|\n";
+  cout << "  |=======================================================|\n\n";
 }
 
 ////////////////////////////////////////////////////////////////
@@ -323,11 +335,8 @@ bool adminLogin()
       pause();
       return true;
     }
-    else
-    {
-      cout << "\n  Invalid credentials!\n";
-      pause();
-    }
+    cout << "\n  Invalid credentials!\n";
+    pause();
   }
   cout << "\n  Too many failed attempts. Access denied.\n";
   pause();
@@ -357,7 +366,6 @@ bool techLogin(int &loggedIdx)
         return true;
       }
     }
-
     cout << "\n  Invalid credentials!\n";
     pause();
   }
@@ -367,40 +375,20 @@ bool techLogin(int &loggedIdx)
 }
 
 ////////////////////////////////////////////////////////////////
-// ADMIN FUNCTIONS
+// SHARED FUNCTIONS
 ////////////////////////////////////////////////////////////////
 
-void addEquipment()
+// availableOnly = false  ->  Admin  "View All Equipment"       (every item)
+// availableOnly = true   ->  Tech   "View Available Equipment" (avail > 0 only)
+void viewEquipment(bool availableOnly)
 {
   clearScreen();
-  cout << "\n  ADD NEW EQUIPMENT\n";
-  cout << "  -----------------------------------------\n\n";
+  if (availableOnly)
+    cout << "\n  AVAILABLE EQUIPMENT\n";
+  else
+    cout << "\n  ALL EQUIPMENT\n";
 
-  cout << "  Name                              : ";
-  cin >> equipmentName[equipmentCount];
-  cout << "  Category (Electronics/Chemistry/  \n";
-  cout << "            Physics/Biology)        : ";
-  cin >> equipmentCat[equipmentCount];
-  cout << "  Quantity                          : ";
-  cin >> equipmentQty[equipmentCount];
-  equipmentAvail[equipmentCount] = equipmentQty[equipmentCount];
-  cout << "  Condition (Good/Fair/Poor)        : ";
-  cin >> equipmentCond[equipmentCount];
-  cout << "  Price (PKR)                       : ";
-  cin >> equipmentPrice[equipmentCount];
-
-  equipmentId[equipmentCount] = nextEquipId++;
-  addHistory("Added", equipmentName[equipmentCount], "Admin");
-  equipmentCount++;
-
-  cout << "\n  Equipment added successfully!\n";
-}
-
-void viewAllEquipment()
-{
-  clearScreen();
-  cout << "\n  ALL EQUIPMENT\n";
-  cout << "  " << string(75, '-') << "\n";
+  cout << "  " << string(72, '-') << "\n";
   cout << "  "
        << setw(4) << left << "ID"
        << setw(16) << left << "Name"
@@ -410,10 +398,14 @@ void viewAllEquipment()
        << setw(10) << left << "Condition"
        << setw(12) << left << "Price(PKR)"
        << "\n";
-  cout << "  " << string(75, '-') << "\n";
+  cout << "  " << string(72, '-') << "\n";
 
+  bool anyShown = false;
   for (int i = 0; i < equipmentCount; i++)
   {
+    if (availableOnly && equipmentAvail[i] <= 0)
+      continue;
+
     cout << "  "
          << setw(4) << left << equipmentId[i]
          << setw(16) << left << equipmentName[i]
@@ -423,9 +415,13 @@ void viewAllEquipment()
          << setw(10) << left << equipmentCond[i]
          << setw(12) << left << equipmentPrice[i]
          << "\n";
+    anyShown = true;
   }
+  if (!anyShown)
+    cout << "\n  No equipment to display.\n";
 }
 
+// Identical search — shared between Admin and Technician
 void searchEquipment()
 {
   clearScreen();
@@ -464,6 +460,181 @@ void searchEquipment()
   }
   if (!found)
     cout << "\n  No equipment found with that name!\n";
+}
+
+// One function replaces four old borrow-display functions:
+//
+//  Admin  "View Borrowing Records"  -> viewBorrowTable("ALL BORROWING RECORDS", "all",      "")
+//  Tech   "Borrowing History"       -> viewBorrowTable("BORROWING HISTORY",     "all",      "")
+//  Tech   "View Active Borrowings"  -> viewBorrowTable("ACTIVE BORROWINGS",     "status",   "Borrowed")
+//  Tech   "My Issued Records"       -> viewBorrowTable("MY ISSUED RECORDS",     "issuedBy", techName[idx])
+//
+void viewBorrowTable(string title, string filterBy, string filterValue)
+{
+  clearScreen();
+  cout << "\n  " << title << "\n";
+  cout << "  " << string(81, '-') << "\n";
+  cout << "  "
+       << setw(4) << left << "ID"
+       << setw(16) << left << "Equipment"
+       << setw(14) << left << "Borrower"
+       << setw(12) << left << "Roll No."
+       << setw(13) << left << "Borrow Date"
+       << setw(12) << left << "Due Date"
+       << setw(10) << left << "Status"
+       << "\n";
+  cout << "  " << string(81, '-') << "\n";
+
+  if (borrowCount == 0)
+  {
+    cout << "\n  No records yet.\n";
+    return;
+  }
+
+  bool anyShown = false;
+  for (int i = 0; i < borrowCount; i++)
+  {
+    if (filterBy == "status" && borrowStatus[i] != filterValue)
+      continue;
+    if (filterBy == "issuedBy" && borrowIssuedBy[i] != filterValue)
+      continue;
+
+    cout << "  "
+         << setw(4) << left << borrowId[i]
+         << setw(16) << left << borrowEquipName[i]
+         << setw(14) << left << borrowerName[i]
+         << setw(12) << left << borrowerRoll[i]
+         << setw(13) << left << borrowDate[i]
+         << setw(12) << left << returnDate[i]
+         << setw(10) << left << borrowStatus[i]
+         << "\n";
+    anyShown = true;
+  }
+  if (!anyShown)
+    cout << "\n  No matching records found.\n";
+}
+
+// Full detail view + ASCII category art — available to both Admin and Technician
+void equipmentDetails()
+{
+  clearScreen();
+  cout << "\n  EQUIPMENT DETAILS\n";
+  cout << "  -----------------------------------------\n\n";
+  cout << "  Enter equipment ID: ";
+  int detailId;
+  cin >> detailId;
+
+  bool found = false;
+  for (int i = 0; i < equipmentCount; i++)
+  {
+    if (equipmentId[i] == detailId)
+    {
+      found = true;
+      clearScreen();
+
+      if (equipmentCat[i] == "Biology")
+      {
+        cout << R"(
+        ,---.
+       (     )
+        `---'
+       /     \
+      |  o   o|        BIOLOGY EQUIPMENT
+       \  ---/
+        |||||
+       /|||||\
+      /__|||||__\
+)";
+      }
+      else if (equipmentCat[i] == "Electronics")
+      {
+        cout << R"(
+     _______________
+    |    DISPLAY    |
+    |  ___________  |
+    | |           | |     ELECTRONICS EQUIPMENT
+    | |   ~~~~    | |
+    | |___________| |
+    |  [o] [o] [o]  |
+    |_______________|
+)";
+      }
+      else if (equipmentCat[i] == "Chemistry")
+      {
+        cout << R"(
+          | |
+          | |
+         /   \
+        /     \         CHEMISTRY EQUIPMENT
+       |       |
+    ___| _____ |___
+   |   |_______|   |
+   |_______________|
+    *   *   *   *
+)";
+      }
+      else if (equipmentCat[i] == "Physics")
+      {
+        cout << R"(
+   ________________________
+  |                        |
+  |   PHYSICS EQUIPMENT    |
+  |     O         O        |
+  |    /|\       /|\       |
+  |   / | \     / | \      |
+  |__/__|__\___/__|__\_____|
+)";
+      }
+      else
+      {
+        cout << "\n  [GENERAL LAB EQUIPMENT]\n";
+      }
+
+      cout << "\n";
+      cout << "  " << string(35, '-') << "\n";
+      cout << "  ID        : " << equipmentId[i] << "\n";
+      cout << "  Name      : " << equipmentName[i] << "\n";
+      cout << "  Category  : " << equipmentCat[i] << "\n";
+      cout << "  Quantity  : " << equipmentQty[i] << "\n";
+      cout << "  Available : " << equipmentAvail[i] << "\n";
+      cout << "  Condition : " << equipmentCond[i] << "\n";
+      cout << "  Price     : PKR " << equipmentPrice[i] << "\n";
+      cout << "  " << string(35, '-') << "\n";
+      break;
+    }
+  }
+  if (!found)
+    cout << "\n  Equipment not found!\n";
+}
+
+////////////////////////////////////////////////////////////////
+// ADMIN-ONLY FUNCTIONS
+////////////////////////////////////////////////////////////////
+
+void addEquipment()
+{
+  clearScreen();
+  cout << "\n  ADD NEW EQUIPMENT\n";
+  cout << "  -----------------------------------------\n\n";
+
+  cout << "  Name                              : ";
+  cin >> equipmentName[equipmentCount];
+  cout << "  Category (Electronics/Chemistry/  \n";
+  cout << "            Physics/Biology)        : ";
+  cin >> equipmentCat[equipmentCount];
+  cout << "  Quantity                          : ";
+  cin >> equipmentQty[equipmentCount];
+  equipmentAvail[equipmentCount] = equipmentQty[equipmentCount];
+  cout << "  Condition (Good/Fair/Poor)        : ";
+  cin >> equipmentCond[equipmentCount];
+  cout << "  Price (PKR)                       : ";
+  cin >> equipmentPrice[equipmentCount];
+
+  equipmentId[equipmentCount] = nextEquipId++;
+  addHistory("Added", equipmentName[equipmentCount], "Admin");
+  equipmentCount++;
+
+  cout << "\n  Equipment added successfully!\n";
 }
 
 void updateEquipment()
@@ -563,37 +734,6 @@ void deleteEquipment()
   }
   if (!found)
     cout << "\n  Equipment ID not found!\n";
-}
-
-void viewBorrowRecords()
-{
-  clearScreen();
-  cout << "\n  ALL BORROWING RECORDS\n";
-  cout << "  " << string(70, '-') << "\n";
-  cout << "  "
-       << setw(4) << left << "ID"
-       << setw(16) << left << "Equipment"
-       << setw(14) << left << "Borrower"
-       << setw(14) << left << "Roll No."
-       << setw(10) << left << "Status"
-       << "\n";
-  cout << "  " << string(70, '-') << "\n";
-
-  if (borrowCount == 0)
-  {
-    cout << "\n  No records yet.\n";
-    return;
-  }
-  for (int i = 0; i < borrowCount; i++)
-  {
-    cout << "  "
-         << setw(4) << left << borrowId[i]
-         << setw(16) << left << borrowEquipName[i]
-         << setw(14) << left << borrowerName[i]
-         << setw(14) << left << borrowerRoll[i]
-         << setw(10) << left << borrowStatus[i]
-         << "\n";
-  }
 }
 
 void sortEquipment()
@@ -729,10 +869,10 @@ void manageTechnicians()
   cout << "  |=======================================================|\n";
   cout << "  Choose option: ";
 
-  int techMenuChoice;
-  cin >> techMenuChoice;
+  int opt;
+  cin >> opt;
 
-  if (techMenuChoice == 1)
+  if (opt == 1)
   {
     clearScreen();
     cout << "\n  ALL TECHNICIANS\n";
@@ -753,7 +893,7 @@ void manageTechnicians()
            << "\n";
     }
   }
-  else if (techMenuChoice == 2)
+  else if (opt == 2)
   {
     clearScreen();
     cout << "\n  ADD TECHNICIAN\n";
@@ -773,7 +913,7 @@ void manageTechnicians()
       cout << "\n  Technician added! Default password is 123.\n";
     }
   }
-  else if (techMenuChoice == 3)
+  else if (opt == 3)
   {
     clearScreen();
     cout << "\n  DELETE TECHNICIAN\n";
@@ -815,7 +955,7 @@ void viewHistory()
   cout << "  "
        << setw(4) << left << "No."
        << setw(10) << left << "Action"
-       << setw(18) << left << "Item"
+       << setw(20) << left << "Item"
        << setw(14) << left << "By"
        << "\n";
   cout << "  " << string(55, '-') << "\n";
@@ -830,86 +970,15 @@ void viewHistory()
     cout << "  "
          << setw(4) << left << i + 1
          << setw(10) << left << historyAction[i]
-         << setw(18) << left << historyItem[i]
+         << setw(20) << left << historyItem[i]
          << setw(14) << left << historyBy[i]
          << "\n";
   }
 }
 
 ////////////////////////////////////////////////////////////////
-// TECHNICIAN FUNCTIONS
+// TECHNICIAN-ONLY FUNCTIONS
 ////////////////////////////////////////////////////////////////
-
-void viewAvailableEquipment()
-{
-  clearScreen();
-  cout << "\n  AVAILABLE EQUIPMENT\n";
-  cout << "  " << string(65, '-') << "\n";
-  cout << "  "
-       << setw(4) << left << "ID"
-       << setw(16) << left << "Name"
-       << setw(14) << left << "Category"
-       << setw(10) << left << "Available"
-       << setw(10) << left << "Condition"
-       << "\n";
-  cout << "  " << string(65, '-') << "\n";
-
-  bool anyAvail = false;
-  for (int i = 0; i < equipmentCount; i++)
-  {
-    if (equipmentAvail[i] > 0)
-    {
-      cout << "  "
-           << setw(4) << left << equipmentId[i]
-           << setw(16) << left << equipmentName[i]
-           << setw(14) << left << equipmentCat[i]
-           << setw(10) << left << equipmentAvail[i]
-           << setw(10) << left << equipmentCond[i]
-           << "\n";
-      anyAvail = true;
-    }
-  }
-  if (!anyAvail)
-    cout << "\n  No equipment available right now.\n";
-}
-
-void techSearchEquipment()
-{
-  clearScreen();
-  cout << "\n  SEARCH EQUIPMENT\n";
-  cout << "  -----------------------------------------\n\n";
-  cout << "  Enter name: ";
-  string searchName;
-  cin >> searchName;
-
-  bool found = false;
-  cout << "\n  " << string(55, '-') << "\n";
-  cout << "  "
-       << setw(4) << left << "ID"
-       << setw(16) << left << "Name"
-       << setw(14) << left << "Category"
-       << setw(7) << left << "Avail"
-       << setw(10) << left << "Condition"
-       << "\n";
-  cout << "  " << string(55, '-') << "\n";
-
-  for (int i = 0; i < equipmentCount; i++)
-  {
-    if (equipmentName[i] == searchName)
-    {
-      cout << "  "
-           << setw(4) << left << equipmentId[i]
-           << setw(16) << left << equipmentName[i]
-           << setw(14) << left << equipmentCat[i]
-           << setw(7) << left << equipmentAvail[i]
-           << setw(10) << left << equipmentCond[i]
-           << "\n";
-      found = true;
-    }
-  }
-  if (!found)
-    cout << "\n  No equipment found!\n";
-}
 
 void borrowEquipment(int techIdx)
 {
@@ -1012,192 +1081,4 @@ void returnEquipment(int techIdx)
   }
   if (!found)
     cout << "\n  Borrow ID not found or already returned!\n";
-}
-
-void myIssuedRecords(int techIdx)
-{
-  clearScreen();
-  cout << "\n  MY ISSUED RECORDS\n";
-  cout << "  Issued by: " << techName[techIdx] << "\n";
-  cout << "  " << string(60, '-') << "\n";
-  cout << "  "
-       << setw(4) << left << "ID"
-       << setw(16) << left << "Equipment"
-       << setw(16) << left << "Borrower"
-       << setw(10) << left << "Status"
-       << "\n";
-  cout << "  " << string(60, '-') << "\n";
-
-  bool anyRecord = false;
-  for (int i = 0; i < borrowCount; i++)
-  {
-    if (borrowIssuedBy[i] == techName[techIdx])
-    {
-      cout << "  "
-           << setw(4) << left << borrowId[i]
-           << setw(16) << left << borrowEquipName[i]
-           << setw(16) << left << borrowerName[i]
-           << setw(10) << left << borrowStatus[i]
-           << "\n";
-      anyRecord = true;
-    }
-  }
-  if (!anyRecord)
-    cout << "\n  No records found.\n";
-}
-
-void viewActiveBorrowings()
-{
-  clearScreen();
-  cout << "\n  ACTIVE BORROWINGS (Not Yet Returned)\n";
-  cout << "  " << string(70, '-') << "\n";
-  cout << "  "
-       << setw(4) << left << "ID"
-       << setw(16) << left << "Equipment"
-       << setw(14) << left << "Borrower"
-       << setw(14) << left << "Roll No."
-       << setw(12) << left << "Due Date"
-       << "\n";
-  cout << "  " << string(70, '-') << "\n";
-
-  bool anyActive = false;
-  for (int i = 0; i < borrowCount; i++)
-  {
-    if (borrowStatus[i] == "Borrowed")
-    {
-      cout << "  "
-           << setw(4) << left << borrowId[i]
-           << setw(16) << left << borrowEquipName[i]
-           << setw(14) << left << borrowerName[i]
-           << setw(14) << left << borrowerRoll[i]
-           << setw(12) << left << returnDate[i]
-           << "\n";
-      anyActive = true;
-    }
-  }
-  if (!anyActive)
-    cout << "\n  No active borrowings at the moment.\n";
-}
-
-void equipmentDetails()
-{
-  clearScreen();
-  cout << "\n  EQUIPMENT DETAILS\n";
-  cout << "  -----------------------------------------\n\n";
-  cout << "  Enter equipment ID: ";
-  int detailId;
-  cin >> detailId;
-
-  bool found = false;
-  for (int i = 0; i < equipmentCount; i++)
-  {
-    if (equipmentId[i] == detailId)
-    {
-      found = true;
-      clearScreen();
-
-      if (equipmentCat[i] == "Biology")
-      {
-        cout << R"(
-        ,---.
-       (     )
-        `---'
-       /     \
-      |  o   o|        BIOLOGY EQUIPMENT
-       \  ---/
-        |||||
-       /|||||\
-      /__|||||__\
-)";
-      }
-      else if (equipmentCat[i] == "Electronics")
-      {
-        cout << R"(
-     _______________
-    |    DISPLAY    |
-    |  ___________  |
-    | |           | |     ELECTRONICS EQUIPMENT
-    | |   ~~~~    | |
-    | |___________| |
-    |  [o] [o] [o]  |
-    |_______________|
-)";
-      }
-      else if (equipmentCat[i] == "Chemistry")
-      {
-        cout << R"(
-          | |
-          | |
-         /   \
-        /     \         CHEMISTRY EQUIPMENT
-       |       |
-    ___| _____ |___
-   |   |_______|   |
-   |_______________|
-    *   *   *   *
-)";
-      }
-      else if (equipmentCat[i] == "Physics")
-      {
-        cout << R"(
-   ________________________
-  |                        |
-  |   PHYSICS EQUIPMENT    |
-  |     O         O        |
-  |    /|\       /|\       |
-  |   / | \     / | \      |
-  |__/__|__\___/__|__\_____|
-)";
-      }
-      else
-      {
-        cout << "\n  [GENERAL LAB EQUIPMENT]\n";
-      }
-
-      cout << "\n";
-      cout << "  " << string(35, '-') << "\n";
-      cout << "  ID        : " << equipmentId[i] << "\n";
-      cout << "  Name      : " << equipmentName[i] << "\n";
-      cout << "  Category  : " << equipmentCat[i] << "\n";
-      cout << "  Quantity  : " << equipmentQty[i] << "\n";
-      cout << "  Available : " << equipmentAvail[i] << "\n";
-      cout << "  Condition : " << equipmentCond[i] << "\n";
-      cout << "  Price     : PKR " << equipmentPrice[i] << "\n";
-      cout << "  " << string(35, '-') << "\n";
-      break;
-    }
-  }
-  if (!found)
-    cout << "\n  Equipment not found!\n";
-}
-
-void borrowingHistory()
-{
-  clearScreen();
-  cout << "\n  BORROWING HISTORY\n";
-  cout << "  " << string(70, '-') << "\n";
-  cout << "  "
-       << setw(4) << left << "ID"
-       << setw(16) << left << "Equipment"
-       << setw(14) << left << "Borrower"
-       << setw(13) << left << "Borrow Date"
-       << setw(10) << left << "Status"
-       << "\n";
-  cout << "  " << string(70, '-') << "\n";
-
-  if (borrowCount == 0)
-  {
-    cout << "\n  No records yet.\n";
-    return;
-  }
-  for (int i = 0; i < borrowCount; i++)
-  {
-    cout << "  "
-         << setw(4) << left << borrowId[i]
-         << setw(16) << left << borrowEquipName[i]
-         << setw(14) << left << borrowerName[i]
-         << setw(13) << left << borrowDate[i]
-         << setw(10) << left << borrowStatus[i]
-         << "\n";
-  }
 }
