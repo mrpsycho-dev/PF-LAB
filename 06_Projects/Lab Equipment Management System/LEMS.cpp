@@ -300,3 +300,43 @@ void viewAllEquipment()
          << "\n";
   }
 }
+
+void searchEquipment()
+{
+  clearScreen();
+  cout << "\n  SEARCH EQUIPMENT\n";
+  cout << "  -----------------------------------------\n\n";
+  cout << "  Enter name: ";
+  string searchName;
+  cin >> searchName;
+
+  bool found = false;
+  cout << "\n  " << string(65, '-') << "\n";
+  cout << "  "
+       << setw(4) << left << "ID"
+       << setw(16) << left << "Name"
+       << setw(14) << left << "Category"
+       << setw(7) << left << "Avail"
+       << setw(10) << left << "Condition"
+       << setw(12) << left << "Price(PKR)"
+       << "\n";
+  cout << "  " << string(65, '-') << "\n";
+
+  for (int i = 0; i < equipmentCount; i++)
+  {
+    if (equipmentName[i] == searchName)
+    {
+      cout << "  "
+           << setw(4) << left << equipmentId[i]
+           << setw(16) << left << equipmentName[i]
+           << setw(14) << left << equipmentCat[i]
+           << setw(7) << left << equipmentAvail[i]
+           << setw(10) << left << equipmentCond[i]
+           << setw(12) << left << equipmentPrice[i]
+           << "\n";
+      found = true;
+    }
+  }
+  if (!found)
+    cout << "\n  No equipment found with that name!\n";
+}
