@@ -439,3 +439,34 @@ void deleteEquipment()
   if (!found)
     cout << "\n  Equipment ID not found!\n";
 }
+
+void viewBorrowRecords()
+{
+  clearScreen();
+  cout << "\n  ALL BORROWING RECORDS\n";
+  cout << "  " << string(70, '-') << "\n";
+  cout << "  "
+       << setw(4) << left << "ID"
+       << setw(16) << left << "Equipment"
+       << setw(14) << left << "Borrower"
+       << setw(14) << left << "Roll No."
+       << setw(10) << left << "Status"
+       << "\n";
+  cout << "  " << string(70, '-') << "\n";
+
+  if (borrowCount == 0)
+  {
+    cout << "\n  No records yet.\n";
+    return;
+  }
+  for (int i = 0; i < borrowCount; i++)
+  {
+    cout << "  "
+         << setw(4) << left << borrowId[i]
+         << setw(16) << left << borrowEquipName[i]
+         << setw(14) << left << borrowerName[i]
+         << setw(14) << left << borrowerRoll[i]
+         << setw(10) << left << borrowStatus[i]
+         << "\n";
+  }
+}
