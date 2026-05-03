@@ -390,3 +390,52 @@ void updateEquipment()
   if (!found)
     cout << "\n  Equipment ID not found!\n";
 }
+
+void deleteEquipment()
+{
+  clearScreen();
+  cout << "\n  DELETE EQUIPMENT\n";
+  cout << "  -----------------------------------------\n\n";
+  cout << "  Enter equipment ID to delete: ";
+  int deleteId;
+  cin >> deleteId;
+
+  bool found = false;
+  for (int i = 0; i < equipmentCount; i++)
+  {
+    if (equipmentId[i] == deleteId)
+    {
+      found = true;
+      cout << "\n  Equipment : " << equipmentName[i] << "\n";
+      cout << "  Confirm delete? (y/n): ";
+      char confirm;
+      cin >> confirm;
+
+      if (confirm == 'y' || confirm == 'Y')
+      {
+        string deletedName = equipmentName[i];
+
+        for (int j = i; j < equipmentCount - 1; j++)
+        {
+          equipmentId[j] = equipmentId[j + 1];
+          equipmentName[j] = equipmentName[j + 1];
+          equipmentCat[j] = equipmentCat[j + 1];
+          equipmentQty[j] = equipmentQty[j + 1];
+          equipmentAvail[j] = equipmentAvail[j + 1];
+          equipmentCond[j] = equipmentCond[j + 1];
+          equipmentPrice[j] = equipmentPrice[j + 1];
+        }
+        equipmentCount--;
+        addHistory("Deleted", deletedName, "Admin");
+        cout << "\n  Equipment deleted!\n";
+      }
+      else
+      {
+        cout << "\n  Deletion cancelled.\n";
+      }
+      break;
+    }
+  }
+  if (!found)
+    cout << "\n  Equipment ID not found!\n";
+}
