@@ -340,3 +340,53 @@ void searchEquipment()
   if (!found)
     cout << "\n  No equipment found with that name!\n";
 }
+
+void updateEquipment()
+{
+  clearScreen();
+  cout << "\n  UPDATE EQUIPMENT\n";
+  cout << "  -----------------------------------------\n\n";
+  cout << "  Enter equipment ID to update: ";
+  int updateId;
+  cin >> updateId;
+
+  bool found = false;
+  for (int i = 0; i < equipmentCount; i++)
+  {
+    if (equipmentId[i] == updateId)
+    {
+      found = true;
+      cout << "\n  Current Record:\n";
+      cout << "  Name      : " << equipmentName[i] << "\n";
+      cout << "  Category  : " << equipmentCat[i] << "\n";
+      cout << "  Quantity  : " << equipmentQty[i] << "\n";
+      cout << "  Condition : " << equipmentCond[i] << "\n";
+      cout << "  Price     : " << equipmentPrice[i] << "\n";
+
+      cout << "\n  Enter New Details:\n";
+      cout << "  Name      : ";
+      cin >> equipmentName[i];
+      cout << "  Category  : ";
+      cin >> equipmentCat[i];
+
+      int oldQty = equipmentQty[i];
+      cout << "  Quantity  : ";
+      cin >> equipmentQty[i];
+      int diff = equipmentQty[i] - oldQty;
+      equipmentAvail[i] += diff;
+      if (equipmentAvail[i] < 0)
+        equipmentAvail[i] = 0;
+
+      cout << "  Condition : ";
+      cin >> equipmentCond[i];
+      cout << "  Price     : ";
+      cin >> equipmentPrice[i];
+
+      addHistory("Updated", equipmentName[i], "Admin");
+      cout << "\n  Equipment updated successfully!\n";
+      break;
+    }
+  }
+  if (!found)
+    cout << "\n  Equipment ID not found!\n";
+}
