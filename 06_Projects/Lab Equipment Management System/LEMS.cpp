@@ -550,3 +550,43 @@ void sortEquipment()
          << "\n";
   }
 }
+
+void viewByCategory()
+{
+  clearScreen();
+  cout << "\n  VIEW EQUIPMENT BY CATEGORY\n";
+  cout << "  -----------------------------------------\n\n";
+  cout << "  Enter category (Electronics/Chemistry/Physics/Biology): ";
+  string searchCat;
+  cin >> searchCat;
+
+  bool found = false;
+  cout << "\n  " << string(65, '-') << "\n";
+  cout << "  "
+       << setw(4) << left << "ID"
+       << setw(16) << left << "Name"
+       << setw(6) << left << "Qty"
+       << setw(7) << left << "Avail"
+       << setw(10) << left << "Condition"
+       << setw(12) << left << "Price(PKR)"
+       << "\n";
+  cout << "  " << string(65, '-') << "\n";
+
+  for (int i = 0; i < equipmentCount; i++)
+  {
+    if (equipmentCat[i] == searchCat)
+    {
+      cout << "  "
+           << setw(4) << left << equipmentId[i]
+           << setw(16) << left << equipmentName[i]
+           << setw(6) << left << equipmentQty[i]
+           << setw(7) << left << equipmentAvail[i]
+           << setw(10) << left << equipmentCond[i]
+           << setw(12) << left << equipmentPrice[i]
+           << "\n";
+      found = true;
+    }
+  }
+  if (!found)
+    cout << "\n  No equipment found in this category!\n";
+}
