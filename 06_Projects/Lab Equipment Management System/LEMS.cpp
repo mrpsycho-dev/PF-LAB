@@ -92,7 +92,122 @@ void viewActiveBorrowings();
 void equipmentDetails();
 void borrowingHistory();
 
-int main() {}
+////////////////////////////////////////////////////////////////
+// MAIN FUNCTION
+////////////////////////////////////////////////////////////////
+
+int main()
+{
+  while (true)
+  {
+    clearScreen();
+    showMainMenu();
+
+    int choice;
+    cin >> choice;
+
+    if (choice == 1)
+    {
+      if (adminLogin())
+      {
+        while (true)
+        {
+          clearScreen();
+          showAdminMenu();
+
+          int adminChoice;
+          cin >> adminChoice;
+
+          if (adminChoice == 1)
+            addEquipment();
+          else if (adminChoice == 2)
+            viewAllEquipment();
+          else if (adminChoice == 3)
+            searchEquipment();
+          else if (adminChoice == 4)
+            updateEquipment();
+          else if (adminChoice == 5)
+            deleteEquipment();
+          else if (adminChoice == 6)
+            viewBorrowRecords();
+          else if (adminChoice == 7)
+            sortEquipment();
+          else if (adminChoice == 8)
+            viewByCategory();
+          else if (adminChoice == 9)
+            manageTechnicians();
+          else if (adminChoice == 10)
+            viewHistory();
+          else if (adminChoice == 11)
+          {
+            cout << "\n  Logging out...\n";
+            pause();
+            break;
+          }
+          else
+            cout << "\n  Invalid option!\n";
+
+          pause();
+        }
+      }
+    }
+    else if (choice == 2)
+    {
+      int loggedIdx = -1;
+      if (techLogin(loggedIdx))
+      {
+        while (true)
+        {
+          clearScreen();
+          cout << "\n  Logged in as: " << techName[loggedIdx] << "\n";
+          showTechMenu();
+
+          int techOption;
+          cin >> techOption;
+
+          if (techOption == 1)
+            viewAvailableEquipment();
+          else if (techOption == 2)
+            techSearchEquipment();
+          else if (techOption == 3)
+            borrowEquipment(loggedIdx);
+          else if (techOption == 4)
+            returnEquipment(loggedIdx);
+          else if (techOption == 5)
+            myIssuedRecords(loggedIdx);
+          else if (techOption == 6)
+            viewActiveBorrowings();
+          else if (techOption == 7)
+            equipmentDetails();
+          else if (techOption == 8)
+            borrowingHistory();
+          else if (techOption == 9)
+          {
+            cout << "\n  Logging out...\n";
+            pause();
+            break;
+          }
+          else
+            cout << "\n  Invalid option!\n";
+
+          pause();
+        }
+      }
+    }
+    else if (choice == 3)
+    {
+      exitScreen();
+      break;
+    }
+    else
+    {
+      cout << "\n  Invalid option!\n";
+      pause();
+    }
+  }
+
+  return 0;
+}
 
 ////////////////////////////////////////////////////////////////
 // UTILITY FUNCTIONS
