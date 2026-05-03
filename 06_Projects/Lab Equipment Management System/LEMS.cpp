@@ -35,3 +35,18 @@ string returnDate[MAX];
 string borrowStatus[MAX];
 string borrowIssuedBy[MAX];
 int nextBorrowId = 1;
+
+////////////////////////////////////////////////////////////////
+// GLOBAL DATA - HISTORY
+////////////////////////////////////////////////////////////////
+int historyCount = 0;
+string historyAction[MAX];
+string historyItem[MAX];
+string historyBy[MAX];
+
+////////////////////////////////////////////////////////////////
+// GLOBAL DATA - TECHNICIANS
+////////////////////////////////////////////////////////////////
+int techCount = 2;
+string techUsername[MAX_TECH] = {"tech1", "tech2"};
+string techName[MAX_TECH] = {"Dr.Sara", "Mr.Hamza"};
