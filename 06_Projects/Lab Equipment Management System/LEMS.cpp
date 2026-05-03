@@ -590,3 +590,123 @@ void viewByCategory()
   if (!found)
     cout << "\n  No equipment found in this category!\n";
 }
+
+void manageTechnicians()
+{
+  clearScreen();
+  cout << "\n";
+  cout << "  |=======================================================|\n";
+  cout << "  |                MANAGE TECHNICIANS                     |\n";
+  cout << "  |=======================================================|\n";
+  cout << "  |   [1]   View All Technicians                          |\n";
+  cout << "  |   [2]   Add Technician                                |\n";
+  cout << "  |   [3]   Delete Technician                             |\n";
+  cout << "  |=======================================================|\n";
+  cout << "  Choose option: ";
+
+  int techMenuChoice;
+  cin >> techMenuChoice;
+
+  if (techMenuChoice == 1)
+  {
+    clearScreen();
+    cout << "\n  ALL TECHNICIANS\n";
+    cout << "  " << string(40, '-') << "\n";
+    cout << "  "
+         << setw(5) << left << "No."
+         << setw(16) << left << "Name"
+         << setw(12) << left << "Username"
+         << "\n";
+    cout << "  " << string(40, '-') << "\n";
+
+    for (int i = 0; i < techCount; i++)
+    {
+      cout << "  "
+           << setw(5) << left << i + 1
+           << setw(16) << left << techName[i]
+           << setw(12) << left << techUsername[i]
+           << "\n";
+    }
+  }
+  else if (techMenuChoice == 2)
+  {
+    clearScreen();
+    cout << "\n  ADD TECHNICIAN\n";
+    cout << "  -----------------------------------------\n\n";
+
+    if (techCount >= MAX_TECH)
+    {
+      cout << "  Technician limit reached!\n";
+    }
+    else
+    {
+      cout << "  Name     : ";
+      cin >> techName[techCount];
+      cout << "  Username : ";
+      cin >> techUsername[techCount];
+      techCount++;
+      cout << "\n  Technician added! Default password is 123.\n";
+    }
+  }
+  else if (techMenuChoice == 3)
+  {
+    clearScreen();
+    cout << "\n  DELETE TECHNICIAN\n";
+    cout << "  -----------------------------------------\n\n";
+    cout << "  Enter username to delete: ";
+    string delUser;
+    cin >> delUser;
+
+    bool found = false;
+    for (int i = 0; i < techCount; i++)
+    {
+      if (techUsername[i] == delUser)
+      {
+        for (int j = i; j < techCount - 1; j++)
+        {
+          techName[j] = techName[j + 1];
+          techUsername[j] = techUsername[j + 1];
+        }
+        techCount--;
+        cout << "\n  Technician deleted!\n";
+        found = true;
+        break;
+      }
+    }
+    if (!found)
+      cout << "\n  Technician not found!\n";
+  }
+  else
+  {
+    cout << "\n  Invalid option!\n";
+  }
+}
+
+void viewHistory()
+{
+  clearScreen();
+  cout << "\n  ACTIVITY HISTORY\n";
+  cout << "  " << string(55, '-') << "\n";
+  cout << "  "
+       << setw(4) << left << "No."
+       << setw(10) << left << "Action"
+       << setw(18) << left << "Item"
+       << setw(14) << left << "By"
+       << "\n";
+  cout << "  " << string(55, '-') << "\n";
+
+  if (historyCount == 0)
+  {
+    cout << "\n  No history yet.\n";
+    return;
+  }
+  for (int i = 0; i < historyCount; i++)
+  {
+    cout << "  "
+         << setw(4) << left << i + 1
+         << setw(10) << left << historyAction[i]
+         << setw(18) << left << historyItem[i]
+         << setw(14) << left << historyBy[i]
+         << "\n";
+  }
+}
