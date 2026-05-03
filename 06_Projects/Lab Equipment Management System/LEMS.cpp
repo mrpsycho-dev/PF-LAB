@@ -66,6 +66,10 @@ void showAdminMenu();
 void showTechMenu();
 void exitScreen();
 
+// --- Auth ---
+bool adminLogin();
+bool techLogin(int &loggedIdx);
+
 int main() {}
 
 ////////////////////////////////////////////////////////////////
@@ -157,4 +161,70 @@ void exitScreen()
   cout << "  |      Thank you for using LEMS!                        |\n";
   cout << "  |      Lab Equipment Management System                  |\n";
   cout << "  |=======================================================|\n";
+}
+
+////////////////////////////////////////////////////////////////
+// AUTH FUNCTIONS
+////////////////////////////////////////////////////////////////
+
+bool adminLogin()
+{
+  for (int i = 0; i < 3; i++)
+  {
+    clearScreen();
+    cout << "\n  ADMIN LOGIN - Attempt " << i + 1 << " of 3\n\n";
+
+    string username, password;
+    cout << "  Username : ";
+    cin >> username;
+    cout << "  Password : ";
+    cin >> password;
+
+    if (username == "admin" && password == "123")
+    {
+      cout << "\n  Login Successful!\n";
+      pause();
+      return true;
+    }
+    else
+    {
+      cout << "\n  Invalid credentials!\n";
+      pause();
+    }
+  }
+  cout << "\n  Too many failed attempts. Access denied.\n";
+  pause();
+  return false;
+}
+
+bool techLogin(int &loggedIdx)
+{
+  for (int i = 0; i < 3; i++)
+  {
+    clearScreen();
+    cout << "\n  TECHNICIAN LOGIN - Attempt " << i + 1 << " of 3\n\n";
+
+    string username, password;
+    cout << "  Username : ";
+    cin >> username;
+    cout << "  Password : ";
+    cin >> password;
+
+    for (int j = 0; j < techCount; j++)
+    {
+      if (techUsername[j] == username && password == "123")
+      {
+        loggedIdx = j;
+        cout << "\n  Welcome, " << techName[j] << "!\n";
+        pause();
+        return true;
+      }
+    }
+
+    cout << "\n  Invalid credentials!\n";
+    pause();
+  }
+  cout << "\n  Too many failed attempts. Access denied.\n";
+  pause();
+  return false;
 }
