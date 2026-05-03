@@ -1055,3 +1055,34 @@ void equipmentDetails()
   if (!found)
     cout << "\n  Equipment not found!\n";
 }
+
+void borrowingHistory()
+{
+  clearScreen();
+  cout << "\n  BORROWING HISTORY\n";
+  cout << "  " << string(70, '-') << "\n";
+  cout << "  "
+       << setw(4) << left << "ID"
+       << setw(16) << left << "Equipment"
+       << setw(14) << left << "Borrower"
+       << setw(13) << left << "Borrow Date"
+       << setw(10) << left << "Status"
+       << "\n";
+  cout << "  " << string(70, '-') << "\n";
+
+  if (borrowCount == 0)
+  {
+    cout << "\n  No records yet.\n";
+    return;
+  }
+  for (int i = 0; i < borrowCount; i++)
+  {
+    cout << "  "
+         << setw(4) << left << borrowId[i]
+         << setw(16) << left << borrowEquipName[i]
+         << setw(14) << left << borrowerName[i]
+         << setw(13) << left << borrowDate[i]
+         << setw(10) << left << borrowStatus[i]
+         << "\n";
+  }
+}
