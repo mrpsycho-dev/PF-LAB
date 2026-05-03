@@ -851,3 +851,82 @@ void borrowEquipment(int techIdx)
   if (!found)
     cout << "\n  Equipment ID not found!\n";
 }
+
+void returnEquipment(int techIdx)
+{
+  clearScreen();
+  cout << "\n  RETURN EQUIPMENT\n";
+  cout << "  -----------------------------------------\n\n";
+  cout << "  Enter Borrow ID: ";
+  int retId;
+  cin >> retId;
+
+  bool found = false;
+  for (int i = 0; i < borrowCount; i++)
+  {
+    if (borrowId[i] == retId && borrowStatus[i] == "Borrowed")
+    {
+      found = true;
+      cout << "\n  Equipment : " << borrowEquipName[i] << "\n";
+      cout << "  Borrower  : " << borrowerName[i] << "\n";
+      cout << "  Confirm return? (y/n): ";
+      char confirm;
+      cin >> confirm;
+
+      if (confirm == 'y' || confirm == 'Y')
+      {
+        borrowStatus[i] = "Returned";
+
+        for (int j = 0; j < equipmentCount; j++)
+        {
+          if (equipmentName[j] == borrowEquipName[i])
+          {
+            equipmentAvail[j]++;
+            break;
+          }
+        }
+        addHistory("Returned", borrowEquipName[i], techName[techIdx]);
+        cout << "\n  Equipment returned successfully!\n";
+      }
+      else
+      {
+        cout << "\n  Return cancelled.\n";
+      }
+      break;
+    }
+  }
+  if (!found)
+    cout << "\n  Borrow ID not found or already returned!\n";
+}
+
+void myIssuedRecords(int techIdx)
+{
+  clearScreen();
+  cout << "\n  MY ISSUED RECORDS\n";
+  cout << "  Issued by: " << techName[techIdx] << "\n";
+  cout << "  " << string(60, '-') << "\n";
+  cout << "  "
+       << setw(4) << left << "ID"
+       << setw(16) << left << "Equipment"
+       << setw(16) << left << "Borrower"
+       << setw(10) << left << "Status"
+       << "\n";
+  cout << "  " << string(60, '-') << "\n";
+
+  bool anyRecord = false;
+  for (int i = 0; i < borrowCount; i++)
+  {
+    if (borrowIssuedBy[i] == techName[techIdx])
+    {
+      cout << "  "
+           << setw(4) << left << borrowId[i]
+           << setw(16) << left << borrowEquipName[i]
+           << setw(16) << left << borrowerName[i]
+           << setw(10) << left << borrowStatus[i]
+           << "\n";
+      anyRecord = true;
+    }
+  }
+  if (!anyRecord)
+    cout << "\n  No records found.\n";
+}
