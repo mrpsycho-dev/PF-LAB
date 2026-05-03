@@ -930,3 +930,128 @@ void myIssuedRecords(int techIdx)
   if (!anyRecord)
     cout << "\n  No records found.\n";
 }
+
+void viewActiveBorrowings()
+{
+  clearScreen();
+  cout << "\n  ACTIVE BORROWINGS (Not Yet Returned)\n";
+  cout << "  " << string(70, '-') << "\n";
+  cout << "  "
+       << setw(4) << left << "ID"
+       << setw(16) << left << "Equipment"
+       << setw(14) << left << "Borrower"
+       << setw(14) << left << "Roll No."
+       << setw(12) << left << "Due Date"
+       << "\n";
+  cout << "  " << string(70, '-') << "\n";
+
+  bool anyActive = false;
+  for (int i = 0; i < borrowCount; i++)
+  {
+    if (borrowStatus[i] == "Borrowed")
+    {
+      cout << "  "
+           << setw(4) << left << borrowId[i]
+           << setw(16) << left << borrowEquipName[i]
+           << setw(14) << left << borrowerName[i]
+           << setw(14) << left << borrowerRoll[i]
+           << setw(12) << left << returnDate[i]
+           << "\n";
+      anyActive = true;
+    }
+  }
+  if (!anyActive)
+    cout << "\n  No active borrowings at the moment.\n";
+}
+
+void equipmentDetails()
+{
+  clearScreen();
+  cout << "\n  EQUIPMENT DETAILS\n";
+  cout << "  -----------------------------------------\n\n";
+  cout << "  Enter equipment ID: ";
+  int detailId;
+  cin >> detailId;
+
+  bool found = false;
+  for (int i = 0; i < equipmentCount; i++)
+  {
+    if (equipmentId[i] == detailId)
+    {
+      found = true;
+      clearScreen();
+
+      if (equipmentCat[i] == "Biology")
+      {
+        cout << R"(
+        ,---.
+       (     )
+        `---'
+       /     \
+      |  o   o|        BIOLOGY EQUIPMENT
+       \  ---/
+        |||||
+       /|||||\
+      /__|||||__\
+)";
+      }
+      else if (equipmentCat[i] == "Electronics")
+      {
+        cout << R"(
+     _______________
+    |    DISPLAY    |
+    |  ___________  |
+    | |           | |     ELECTRONICS EQUIPMENT
+    | |   ~~~~    | |
+    | |___________| |
+    |  [o] [o] [o]  |
+    |_______________|
+)";
+      }
+      else if (equipmentCat[i] == "Chemistry")
+      {
+        cout << R"(
+          | |
+          | |
+         /   \
+        /     \         CHEMISTRY EQUIPMENT
+       |       |
+    ___| _____ |___
+   |   |_______|   |
+   |_______________|
+    *   *   *   *
+)";
+      }
+      else if (equipmentCat[i] == "Physics")
+      {
+        cout << R"(
+   ________________________
+  |                        |
+  |   PHYSICS EQUIPMENT    |
+  |     O         O        |
+  |    /|\       /|\       |
+  |   / | \     / | \      |
+  |__/__|__\___/__|__\_____|
+)";
+      }
+      else
+      {
+        cout << "\n  [GENERAL LAB EQUIPMENT]\n";
+      }
+
+      cout << "\n";
+      cout << "  " << string(35, '-') << "\n";
+      cout << "  ID        : " << equipmentId[i] << "\n";
+      cout << "  Name      : " << equipmentName[i] << "\n";
+      cout << "  Category  : " << equipmentCat[i] << "\n";
+      cout << "  Quantity  : " << equipmentQty[i] << "\n";
+      cout << "  Available : " << equipmentAvail[i] << "\n";
+      cout << "  Condition : " << equipmentCond[i] << "\n";
+      cout << "  Price     : PKR " << equipmentPrice[i] << "\n";
+      cout << "  " << string(35, '-') << "\n";
+      break;
+    }
+  }
+  if (!found)
+    cout << "\n  Equipment not found!\n";
+}
