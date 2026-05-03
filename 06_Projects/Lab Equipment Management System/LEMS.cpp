@@ -70,6 +70,18 @@ void exitScreen();
 bool adminLogin();
 bool techLogin(int &loggedIdx);
 
+// --- Admin Functions ---
+void addEquipment();
+void viewAllEquipment();
+void searchEquipment();
+void updateEquipment();
+void deleteEquipment();
+void viewBorrowRecords();
+void sortEquipment();
+void viewByCategory();
+void manageTechnicians();
+void viewHistory();
+
 int main() {}
 
 ////////////////////////////////////////////////////////////////
@@ -227,4 +239,64 @@ bool techLogin(int &loggedIdx)
   cout << "\n  Too many failed attempts. Access denied.\n";
   pause();
   return false;
+}
+
+////////////////////////////////////////////////////////////////
+// ADMIN FUNCTIONS
+////////////////////////////////////////////////////////////////
+
+void addEquipment()
+{
+  clearScreen();
+  cout << "\n  ADD NEW EQUIPMENT\n";
+  cout << "  -----------------------------------------\n\n";
+
+  cout << "  Name                              : ";
+  cin >> equipmentName[equipmentCount];
+  cout << "  Category (Electronics/Chemistry/  \n";
+  cout << "            Physics/Biology)        : ";
+  cin >> equipmentCat[equipmentCount];
+  cout << "  Quantity                          : ";
+  cin >> equipmentQty[equipmentCount];
+  equipmentAvail[equipmentCount] = equipmentQty[equipmentCount];
+  cout << "  Condition (Good/Fair/Poor)        : ";
+  cin >> equipmentCond[equipmentCount];
+  cout << "  Price (PKR)                       : ";
+  cin >> equipmentPrice[equipmentCount];
+
+  equipmentId[equipmentCount] = nextEquipId++;
+  addHistory("Added", equipmentName[equipmentCount], "Admin");
+  equipmentCount++;
+
+  cout << "\n  Equipment added successfully!\n";
+}
+
+void viewAllEquipment()
+{
+  clearScreen();
+  cout << "\n  ALL EQUIPMENT\n";
+  cout << "  " << string(75, '-') << "\n";
+  cout << "  "
+       << setw(4) << left << "ID"
+       << setw(16) << left << "Name"
+       << setw(14) << left << "Category"
+       << setw(6) << left << "Qty"
+       << setw(7) << left << "Avail"
+       << setw(10) << left << "Condition"
+       << setw(12) << left << "Price(PKR)"
+       << "\n";
+  cout << "  " << string(75, '-') << "\n";
+
+  for (int i = 0; i < equipmentCount; i++)
+  {
+    cout << "  "
+         << setw(4) << left << equipmentId[i]
+         << setw(16) << left << equipmentName[i]
+         << setw(14) << left << equipmentCat[i]
+         << setw(6) << left << equipmentQty[i]
+         << setw(7) << left << equipmentAvail[i]
+         << setw(10) << left << equipmentCond[i]
+         << setw(12) << left << equipmentPrice[i]
+         << "\n";
+  }
 }
