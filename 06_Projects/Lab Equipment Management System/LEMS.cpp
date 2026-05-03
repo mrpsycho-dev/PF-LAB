@@ -82,6 +82,16 @@ void viewByCategory();
 void manageTechnicians();
 void viewHistory();
 
+// --- Technician Functions ---
+void viewAvailableEquipment();
+void techSearchEquipment();
+void borrowEquipment(int techIdx);
+void returnEquipment(int techIdx);
+void myIssuedRecords(int techIdx);
+void viewActiveBorrowings();
+void equipmentDetails();
+void borrowingHistory();
+
 int main() {}
 
 ////////////////////////////////////////////////////////////////
@@ -709,4 +719,79 @@ void viewHistory()
          << setw(14) << left << historyBy[i]
          << "\n";
   }
+}
+
+////////////////////////////////////////////////////////////////
+// TECHNICIAN FUNCTIONS
+////////////////////////////////////////////////////////////////
+
+void viewAvailableEquipment()
+{
+  clearScreen();
+  cout << "\n  AVAILABLE EQUIPMENT\n";
+  cout << "  " << string(65, '-') << "\n";
+  cout << "  "
+       << setw(4) << left << "ID"
+       << setw(16) << left << "Name"
+       << setw(14) << left << "Category"
+       << setw(10) << left << "Available"
+       << setw(10) << left << "Condition"
+       << "\n";
+  cout << "  " << string(65, '-') << "\n";
+
+  bool anyAvail = false;
+  for (int i = 0; i < equipmentCount; i++)
+  {
+    if (equipmentAvail[i] > 0)
+    {
+      cout << "  "
+           << setw(4) << left << equipmentId[i]
+           << setw(16) << left << equipmentName[i]
+           << setw(14) << left << equipmentCat[i]
+           << setw(10) << left << equipmentAvail[i]
+           << setw(10) << left << equipmentCond[i]
+           << "\n";
+      anyAvail = true;
+    }
+  }
+  if (!anyAvail)
+    cout << "\n  No equipment available right now.\n";
+}
+
+void techSearchEquipment()
+{
+  clearScreen();
+  cout << "\n  SEARCH EQUIPMENT\n";
+  cout << "  -----------------------------------------\n\n";
+  cout << "  Enter name: ";
+  string searchName;
+  cin >> searchName;
+
+  bool found = false;
+  cout << "\n  " << string(55, '-') << "\n";
+  cout << "  "
+       << setw(4) << left << "ID"
+       << setw(16) << left << "Name"
+       << setw(14) << left << "Category"
+       << setw(7) << left << "Avail"
+       << setw(10) << left << "Condition"
+       << "\n";
+  cout << "  " << string(55, '-') << "\n";
+
+  for (int i = 0; i < equipmentCount; i++)
+  {
+    if (equipmentName[i] == searchName)
+    {
+      cout << "  "
+           << setw(4) << left << equipmentId[i]
+           << setw(16) << left << equipmentName[i]
+           << setw(14) << left << equipmentCat[i]
+           << setw(7) << left << equipmentAvail[i]
+           << setw(10) << left << equipmentCond[i]
+           << "\n";
+      found = true;
+    }
+  }
+  if (!found)
+    cout << "\n  No equipment found!\n";
 }
