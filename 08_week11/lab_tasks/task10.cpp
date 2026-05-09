@@ -1,8 +1,10 @@
 #include <iostream>
 using namespace std;
+
 void displayWorld(char arr[5][5]);
 bool setGravityStatus(bool status);
 void timeTick(int time, char arr[5][5]);
+
 bool gravity = false;
 bool isBlackHole = true;
 
