@@ -759,27 +759,34 @@ void sortEquipment()
         doSwap = true;
       if (sortChoice == 4 && equipmentName[i] < equipmentName[j])
         doSwap = true;
+    
 
       if (doSwap)
       {
         int tId = equipmentId[i];
         equipmentId[i] = equipmentId[j];
         equipmentId[j] = tId;
+        
         string tName = equipmentName[i];
         equipmentName[i] = equipmentName[j];
         equipmentName[j] = tName;
+        
         string tCat = equipmentCat[i];
         equipmentCat[i] = equipmentCat[j];
         equipmentCat[j] = tCat;
+        
         int tQty = equipmentQty[i];
         equipmentQty[i] = equipmentQty[j];
         equipmentQty[j] = tQty;
+        
         int tAvail = equipmentAvail[i];
         equipmentAvail[i] = equipmentAvail[j];
         equipmentAvail[j] = tAvail;
+        
         string tCond = equipmentCond[i];
         equipmentCond[i] = equipmentCond[j];
         equipmentCond[j] = tCond;
+        
         float tPrice = equipmentPrice[i];
         equipmentPrice[i] = equipmentPrice[j];
         equipmentPrice[j] = tPrice;

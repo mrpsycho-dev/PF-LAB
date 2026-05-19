@@ -1,0 +1,6 @@
+5 6
+1 Microscope Biology 5 5 Good 15000
+2 Oscilloscope Electronics 3 3 Good 25000
+3 BunsenBurner Chemistry 8 8 Fair 2000
+4 Voltmeter Electronics 6 6 Good 5000
+5 Centrifuge Biology 2 2 Fair 50000
