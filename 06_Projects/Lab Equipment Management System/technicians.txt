@@ -1,3 +1,0 @@
-2
-tech1 123 Dr.Sara sara
-tech2 123 Mr.Hamza hamza

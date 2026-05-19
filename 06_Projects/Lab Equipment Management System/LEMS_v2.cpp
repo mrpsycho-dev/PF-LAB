@@ -61,8 +61,9 @@ string getStr(string msg)
 {
   string s;
   cout << msg;
-  cin.ignore();
-  getline(cin, s);
+  // cin.ignore();
+  // getline(cin, s);
+  cin >> s;
   return s;
 }
 
@@ -379,7 +380,7 @@ void eqDetails()
   line(36);
 }
 
-// equipment add / update / delete
+// equipment add, update and delete...CRUD
 
 void addEq()
 {
@@ -395,7 +396,7 @@ void addEq()
   eqCount++;
   addHist("Added", eqName[i], "Admin");
   saveEquip();
-  cout << "\n  Equipment added!\n";
+  cout << "Equipment added!\n";
 }
 
 void updateEq()
@@ -417,7 +418,7 @@ void updateEq()
   eqCat[i] = getStr("  New Category  : ");
   int old = eqQty[i];
   eqQty[i] = getInt("  New Quantity  : ");
-  eqAvail[i] = eqAvail[i] + (eqQty[i] - old); // keep available count in sync
+  eqAvail[i] = eqAvail[i] + (eqQty[i] - old); // this keeps track of borrowed items.. suppose 3 iterms were borrowed and total were 10 so updated value is now 15, then new available quantity is 15-3 = 12
   if (eqAvail[i] < 0)
     eqAvail[i] = 0;
   eqCond[i] = getStr("  New Condition : ");
@@ -430,16 +431,16 @@ void updateEq()
 void deleteEq()
 {
   heading("DELETE EQUIPMENT");
-  int id = getInt("  Enter equipment ID: ");
+  int id = getInt("Enter equipment ID: ");
   int i = findEq(id);
   if (i == -1)
   {
-    cout << "  Not found!\n";
+    cout << "Not found!\n";
     return;
   }
   if (!confirm("Delete " + eqName[i] + "?"))
   {
-    cout << "  Cancelled.\n";
+    cout << "Cancelled.\n";
     return;
   }
 
@@ -530,7 +531,7 @@ void sortEq()
     }
   }
   saveEquip();
-  cout << "\n  Sorted! Result:\n";
+  cout << "\nSorted! Result:\n";
   viewEqList("SORTED EQUIPMENT", "all", "");
 }
 
