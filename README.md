@@ -1,12 +1,12 @@
-# 📘 Programming Fundamentals  
+# Programming Fundamentals  
 
-## 📚 About This Repository  
+## About This Repository  
 This repository contains my **Programming Fundamentals** assignments and lab work completed during class.  
 All programs are written in **C++** as part of my coursework.
 
 ---
 
-## 🎯 Purpose  
+## Purpose  
 The purpose of this repository is to:  
 - Keep my class work organized  
 - Practice programming regularly  
@@ -14,7 +14,7 @@ The purpose of this repository is to:
 
 ---
 
-## ▶️ How to Run  
+## How to Run  
  Compile the program:
    ```bash
    c++ filename.cpp -o filename.exe
