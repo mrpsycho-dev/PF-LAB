@@ -17,4 +17,4 @@ The purpose of this repository is to:
 ## How to Run  
  Compile the program:
    ```bash
-   c++ filename.cpp -o filename.exe
+   c++ filename.cpp -o filename.exe && filename.exe
